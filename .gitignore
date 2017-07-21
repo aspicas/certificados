@@ -1,2 +1,4 @@
-.idea/*
-out/*
+/Servidor/.idea/*
+/Servidor/out/*
+/Servidor/target/*
+
