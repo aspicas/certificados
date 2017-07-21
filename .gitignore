@@ -1,4 +1,6 @@
 /Servidor/.idea/*
 /Servidor/out/*
 /Servidor/target/*
-
+/Cliente/.idea/*
+/Cliente/out/*
+/Cliente/target/*
