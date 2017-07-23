@@ -4,3 +4,6 @@
 /Cliente/.idea/*
 /Cliente/out/*
 /Cliente/target/*
+Servidor.iml
+Cliente.iml
+*.iml
