@@ -1,5 +1,9 @@
 package service;
 
+import com.google.gson.Gson;
+import database.DataBase;
+import model.User;
+
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
 import java.io.*;
@@ -8,6 +12,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
+import java.util.Map;
 
 /**
  * Created by david on 7/21/17.
@@ -19,26 +24,52 @@ public class Util {
             public void run(){
                 try {
                     while (true){
+                        Gson gson = new Gson();
+                        Map<String, User> db = DataBase.getUsers();
                         Socket s = ss.accept();
-                        SSLSession session = ((SSLSocket) s).getSession();
-                        Certificate[] cchain2 = session.getLocalCertificates();
-                        for (int i = 0; i < cchain2.length; i++) {
-                            System.out.println(((X509Certificate) cchain2[i]).getSubjectDN());
-                        }
-                        System.out.println("Peer host is " + session.getPeerHost());
-                        System.out.println("Cipher is " + session.getCipherSuite());
-                        System.out.println("Protocol is " + session.getProtocol());
-                        System.out.println("ID is " + new BigInteger(session.getId()));
-                        System.out.println("Session created in " + session.getCreationTime());
-                        System.out.println("Session accessed in " + session.getLastAccessedTime());
+//                        SSLSession session = ((SSLSocket) s).getSession();
+//                        Certificate[] cchain2 = session.getLocalCertificates();
+//                        for (int i = 0; i < cchain2.length; i++) {
+//                            System.out.println(((X509Certificate) cchain2[i]).getSubjectDN());
+//                        }
+//                        System.out.println("Peer host is " + session.getPeerHost());
+//                        System.out.println("Cipher is " + session.getCipherSuite());
+//                        System.out.println("Protocol is " + session.getProtocol());
+//                        System.out.println("ID is " + new BigInteger(session.getId()));
+//                        System.out.println("Session created in " + session.getCreationTime());
+//                        System.out.println("Session accessed in " + session.getLastAccessedTime());
 
                         BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-                        String x = in.readLine();
-                        System.out.println(x);
+                        String comando = in.readLine();
+                        System.out.println(comando);
+                        switch (comando){
+                            case "ingresar":
+                                BufferedReader in1 = new BufferedReader(new InputStreamReader(s.getInputStream()));
+                                String json1 = in1.readLine();
+                                User user1 = gson.fromJson(json1, User.class);
+                                if (db.get(user1.getUserName()) != null){
+                                    PrintStream out = new PrintStream(s.getOutputStream());
+                                    out.println("Ingreso exitoso");
+                                } else {
+                                    PrintStream out = new PrintStream(s.getOutputStream());
+                                    out.println("No esta registrado");
+                                }
+                                break;
+                            case "registrar":
+                                BufferedReader in2 = new BufferedReader(new InputStreamReader(s.getInputStream()));
+                                String json2 = in2.readLine();
+                                User user2 = gson.fromJson(json2, User.class);
+                                db.put(user2.getUserName(), user2);
+                                System.out.println(db.get(user2.getUserName()).getPassword());
+                                break;
+                            case "prueba":
+                                break;
+                        }
 
                         PrintStream out = new PrintStream(s.getOutputStream());
-                        out.println("Hi");
-                        out.close();
+                        out.println("Final");
+//                        out.close();
+//                        in.close();
                         s.close();
                     }
                 } catch (IOException e) {

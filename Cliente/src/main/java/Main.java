@@ -1,5 +1,7 @@
 import model.Registry;
+import model.User;
 import service.SocketSSL;
+import service.Util;
 
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
@@ -16,12 +18,52 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Scanner;
 
 /**
  * Created by david on 7/21/17.
  */
 public class Main {
-    public static void main(String[] args) throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException {
-        new SocketSSL().start();
+    public static void main(String[] args) throws Exception {
+        User user = new User();
+        Scanner teclado = new Scanner(System.in);
+        System.out.println("Cliente starts");
+        while (true){
+            SocketSSL s = new SocketSSL();
+            System.out.println("Opciones: ");
+            System.out.println("1. Ingresar");
+            System.out.println("2. Registrarse");
+            System.out.println("3. Probar");
+            switch (teclado.nextLine().toLowerCase()){
+                case "1":
+                    if (Util.intentos < 3){
+                        System.out.print("Nombre de usuario: ");
+                        user.setUserName(teclado.nextLine().toLowerCase());
+                        System.out.print("Clave: ");
+                        user.setPassword(s.encriptar(teclado.nextLine().toLowerCase()));
+                        s.start(user, "ingresar");
+                    } else {
+                        System.out.print("Usted ha agotado el numero de intentos");
+                    }
+                    break;
+                case "2":
+                    System.out.print("Nombre de usuario: ");
+                    user.setUserName(teclado.nextLine().toLowerCase());
+                    System.out.print("Clave: ");
+                    String pass = teclado.nextLine().toLowerCase();
+                    while (pass.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*(_|[^\\w])).{6,}$")){
+                        System.out.println("Minimo de 6, un caracter especial y una mayuscula");
+                        System.out.print("Clave: ");
+                        pass = teclado.nextLine().toLowerCase();
+                    }
+                    user.setPassword(s.encriptar(pass));
+                    s.start(user, "registrar");
+                    System.out.println("Registro exitoso");
+                    break;
+                case "3":
+
+                    break;
+            }
+        }
     }
 }

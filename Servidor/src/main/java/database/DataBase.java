@@ -9,9 +9,9 @@ import java.util.Map;
  * Created by david on 7/21/17.
  */
 public class DataBase {
-    private static Map<Long, User> users = new HashMap<>();
+    private static Map<String, User> users = new HashMap<>();
 
-    public static Map<Long, User> getUsers() {
+    public static Map<String, User> getUsers() {
         return users;
     }
 
