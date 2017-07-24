@@ -1,6 +1,7 @@
 package service;
 
 import com.google.gson.Gson;
+import com.sun.org.apache.regexp.internal.RE;
 import database.DataBase;
 import model.Certificado;
 import model.Registry;
@@ -69,14 +70,16 @@ public class Util {
                                 BufferedReader in4 = new BufferedReader(new InputStreamReader(s.getInputStream()));
                                 String json4 = in4.readLine();
                                 Certificado cert = gson.fromJson(json4, Certificado.class);
-                                cert.setAlias(cert.getCn());
+                                cert.setAlias(cert.getCn().split("\\s+")[0]);
                                 String gen = "-genkey " +
-                                        "-dname \"cn="+ cert.getCn() +", ou="+ cert.getOu() +", o="+ cert.getO() +", " +
-                                        "l="+ cert.getL() +", st="+ cert.getSt() +", c="+ cert.getC() +" \" " +
+                                        "-dname cn="+ cert.getCn() +",ou="+ cert.getOu() +",o="+ cert.getO() +"," +
+                                        "l="+ cert.getL() +",st="+ cert.getSt() +",c="+ cert.getC() +" " +
                                         "-keyalg RSA " +
                                         "-alias "+ cert.getAlias() +" " +
                                         "-keystore "+ Util.class.getClassLoader().getResource("serverKey.jks").getPath() +" " +
-                                        "-storepass " + Registry.passwordCerts;
+                                        "-storepass " + Registry.passwordCerts + " " +
+                                        "-keypass " + Registry.passwordCerts;
+                                System.out.println(gen);
                                 sun.security.tools.keytool.Main.main(gen.split("\\s+"));
                                 break;
                         }
@@ -94,5 +97,12 @@ public class Util {
                 }
             }
         }.start();
+    }
+
+    public static void imprimir(String s){
+
+        for (int i = 0; i<s.split("\\s").length; i++){
+            System.out.println(s.split("\\s")[i] + " " + i);
+        }
     }
 }

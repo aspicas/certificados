@@ -66,7 +66,6 @@ public class Util {
                             PrintStream out4 = new PrintStream(s.getOutputStream());
                             out4.println(gson.toJson(cert));
                             status = false;
-                            System.err.println("Aviso2");
                             break;
                     }
 

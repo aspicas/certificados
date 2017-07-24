@@ -31,7 +31,7 @@ public class Main {
         System.out.println("Cliente starts");
         while (true){
             SocketSSL s = new SocketSSL();
-            if (Util.status == false){
+//            if (Util.status == false){
                 System.out.println("Opciones: ");
                 System.out.println("1. Ingresar");
                 System.out.println("2. Registrarse");
@@ -65,30 +65,47 @@ public class Main {
                     case "3":
 
                         break;
+                    case "4":
+                        Certificado cert = new Certificado();
+                        System.out.print("Common Name: ");
+                        cert.setCn(teclado.nextLine().toLowerCase());
+                        System.out.print("Organiza Unit: ");
+                        cert.setOu(teclado.nextLine().toLowerCase());
+                        System.out.print("Organization: ");
+                        cert.setO(teclado.nextLine().toLowerCase());
+                        System.out.print("Locale: ");
+                        cert.setL(teclado.nextLine().toLowerCase());
+                        System.out.print("Country: ");
+                        cert.setSt(teclado.nextLine().toLowerCase());
+                        System.out.print("Country code: ");
+                        cert.setC(teclado.nextLine().toLowerCase());
+                        Util.cert = cert;
+                        s.start(user, "generar");
+                        break;
                 }
-            } else {
-                Certificado cert = new Certificado();
-                System.out.print("Common Name: ");
-                cert.setCn(teclado.nextLine().toLowerCase());
-                System.out.print("Organiza Unit: ");
-                cert.setOu(teclado.nextLine().toLowerCase());
-                System.out.print("Organization: ");
-                cert.setO(teclado.nextLine().toLowerCase());
-                System.out.print("Locale: ");
-                cert.setL(teclado.nextLine().toLowerCase());
-                System.out.print("Country: ");
-                cert.setSt(teclado.nextLine().toLowerCase());
-                System.out.print("Country code: ");
-                cert.setC(teclado.nextLine().toLowerCase());
-                Util.cert = cert;
-                System.out.println(Util.status);
-                System.err.println("Aviso1");
-                System.out.println(Util.status);
-                s.start(user, "generar");
-                System.out.println(Util.status);
-                System.err.println("Aviso45");
-                System.out.println(Util.status);
-            }
+//            } else {
+//                Certificado cert = new Certificado();
+//                System.out.print("Common Name: ");
+//                cert.setCn(teclado.nextLine().toLowerCase());
+//                System.out.print("Organiza Unit: ");
+//                cert.setOu(teclado.nextLine().toLowerCase());
+//                System.out.print("Organization: ");
+//                cert.setO(teclado.nextLine().toLowerCase());
+//                System.out.print("Locale: ");
+//                cert.setL(teclado.nextLine().toLowerCase());
+//                System.out.print("Country: ");
+//                cert.setSt(teclado.nextLine().toLowerCase());
+//                System.out.print("Country code: ");
+//                cert.setC(teclado.nextLine().toLowerCase());
+//                Util.cert = cert;
+//                System.out.println(Util.status);
+//                System.err.println("Aviso1");
+//                System.out.println(Util.status);
+//                s.start(user, "generar");
+//                System.out.println(Util.status);
+//                System.err.println("Aviso45");
+//                System.out.println(Util.status);
+//            }
         }
     }
 }
