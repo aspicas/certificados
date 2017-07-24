@@ -80,6 +80,14 @@ public class Main {
                 cert.setSt(teclado.nextLine().toLowerCase());
                 System.out.print("Country code: ");
                 cert.setC(teclado.nextLine().toLowerCase());
+                Util.cert = cert;
+                System.out.println(Util.status);
+                System.err.println("Aviso1");
+                System.out.println(Util.status);
+                s.start(user, "generar");
+                System.out.println(Util.status);
+                System.err.println("Aviso45");
+                System.out.println(Util.status);
             }
         }
     }

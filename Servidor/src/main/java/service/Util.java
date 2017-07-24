@@ -62,7 +62,6 @@ public class Util {
                                 String json2 = in2.readLine();
                                 User user2 = gson.fromJson(json2, User.class);
                                 db.put(user2.getUserName(), user2);
-                                System.out.println(db.get(user2.getUserName()).getPassword());
                                 break;
                             case "prueba":
                                 break;
@@ -70,6 +69,7 @@ public class Util {
                                 BufferedReader in4 = new BufferedReader(new InputStreamReader(s.getInputStream()));
                                 String json4 = in4.readLine();
                                 Certificado cert = gson.fromJson(json4, Certificado.class);
+                                cert.setAlias(cert.getCn());
                                 String gen = "-genkey " +
                                         "-dname \"cn="+ cert.getCn() +", ou="+ cert.getOu() +", o="+ cert.getO() +", " +
                                         "l="+ cert.getL() +", st="+ cert.getSt() +", c="+ cert.getC() +" \" " +

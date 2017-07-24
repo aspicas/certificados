@@ -31,7 +31,9 @@ public class SocketSSL {
     }
 
     public void start(User user, String comando){
+        System.out.println("Comando begin");
         Util.startClient(s, user, comando);
+        System.out.println("Comando end");
     }
 
     public String encriptar(String texto){

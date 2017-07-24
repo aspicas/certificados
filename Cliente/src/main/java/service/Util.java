@@ -18,6 +18,7 @@ import java.security.cert.X509Certificate;
 public class Util {
     public static int intentos = 0;
     public static boolean status = false;
+    public static Certificado cert = null;
 
     public static void startClient(final Socket s, final User user, final String comando){
         System.out.println("Client start");
@@ -40,7 +41,7 @@ public class Util {
 
                     PrintStream comand = new PrintStream(s.getOutputStream());
                     comand.println(comando);
-
+                    System.err.println(comando);
                     switch (comando){
                         case "ingresar":
                             PrintStream out1 = new PrintStream(s.getOutputStream());
@@ -60,6 +61,12 @@ public class Util {
                             out2.println(gson.toJson(user));
                             break;
                         case "prueba":
+                            break;
+                        case "generar":
+                            PrintStream out4 = new PrintStream(s.getOutputStream());
+                            out4.println(gson.toJson(cert));
+                            status = false;
+                            System.err.println("Aviso2");
                             break;
                     }
 
