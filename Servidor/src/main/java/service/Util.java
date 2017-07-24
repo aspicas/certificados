@@ -75,12 +75,21 @@ public class Util {
                                         "-dname cn="+ cert.getCn() +",ou="+ cert.getOu() +",o="+ cert.getO() +"," +
                                         "l="+ cert.getL() +",st="+ cert.getSt() +",c="+ cert.getC() +" " +
                                         "-keyalg RSA " +
-                                        "-alias "+ cert.getAlias() +" " +
+                                        "-alias "+cert.getAlias()+" " +
                                         "-keystore "+ Util.class.getClassLoader().getResource("serverKey.jks").getPath() +" " +
                                         "-storepass " + Registry.passwordCerts + " " +
                                         "-keypass " + Registry.passwordCerts;
                                 System.out.println(gen);
                                 sun.security.tools.keytool.Main.main(gen.split("\\s+"));
+                                gen = "-export " +
+                                        "-keystore "+Util.class.getClassLoader().getResource("serverKey.jks").getPath()+" " +
+                                        "-alias "+cert.getAlias()+" " +
+                                        "-file "+cert.getAlias()+".cer " +
+                                        "-keypass "+Registry.passwordCerts+" " +
+                                        "-storepass " + Registry.passwordCerts;
+//                                System.out.println(this.getClass().getResource("").getPath());
+                                System.out.println(gen);
+                                sun.security.tools.keytool.Main.main(gen.split("\\s"));
                                 break;
                         }
 
