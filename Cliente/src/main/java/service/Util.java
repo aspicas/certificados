@@ -1,6 +1,7 @@
 package service;
 
 import com.google.gson.Gson;
+import model.Certificado;
 import model.User;
 
 import javax.net.ssl.SSLSession;
@@ -16,6 +17,8 @@ import java.security.cert.X509Certificate;
  */
 public class Util {
     public static int intentos = 0;
+    public static boolean status = false;
+
     public static void startClient(final Socket s, final User user, final String comando){
         System.out.println("Client start");
         new Thread(){
@@ -48,6 +51,8 @@ public class Util {
                             if (x.equals("No esta registrado")){
                                 intentos++;
                                 System.out.println("Intentos: " + intentos);
+                            } else {
+                                status = true;
                             }
                             break;
                         case "registrar":

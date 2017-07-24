@@ -2,6 +2,8 @@ package service;
 
 import com.google.gson.Gson;
 import database.DataBase;
+import model.Certificado;
+import model.Registry;
 import model.User;
 
 import javax.net.ssl.SSLSession;
@@ -64,6 +66,19 @@ public class Util {
                                 break;
                             case "prueba":
                                 break;
+                            case "generar":
+                                BufferedReader in4 = new BufferedReader(new InputStreamReader(s.getInputStream()));
+                                String json4 = in4.readLine();
+                                Certificado cert = gson.fromJson(json4, Certificado.class);
+                                String gen = "-genkey " +
+                                        "-dname \"cn="+ cert.getCn() +", ou="+ cert.getOu() +", o="+ cert.getO() +", " +
+                                        "l="+ cert.getL() +", st="+ cert.getSt() +", c="+ cert.getC() +" \" " +
+                                        "-keyalg RSA " +
+                                        "-alias "+ cert.getAlias() +" " +
+                                        "-keystore "+ Util.class.getClassLoader().getResource("serverKey.jks").getPath() +" " +
+                                        "-storepass " + Registry.passwordCerts;
+                                sun.security.tools.keytool.Main.main(gen.split("\\s+"));
+                                break;
                         }
 
                         PrintStream out = new PrintStream(s.getOutputStream());
@@ -73,6 +88,8 @@ public class Util {
                         s.close();
                     }
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
