@@ -2,6 +2,7 @@ package service;
 
 import com.google.gson.Gson;
 import model.Certificado;
+import model.MensajeDameFichero;
 import model.User;
 
 import javax.net.ssl.SSLSession;
@@ -19,6 +20,10 @@ public class Util {
     public static int intentos = 0;
     public static boolean status = false;
     public static Certificado cert = null;
+    public final static int FILE_SIZE = 6022386; // file size temporary hard coded
+    // should bigger than the file to be downloaded
+    public final static String
+            FILE_TO_RECEIVE = "target/certs/";
 
     public static void startClient(final Socket s, final User user, final String comando){
         System.out.println("Client start");
@@ -67,22 +72,79 @@ public class Util {
                             out4.println(gson.toJson(cert));
 
                             String ruta = "target/certs/"+cert.getCn().split("\\s+")[0]+".cer";
+
+                            int bytesRead;
+                            int current = 0;
+                            FileOutputStream fos = null;
+                            BufferedOutputStream bos = null;
+
                             try {
-                                ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-                                FileOutputStream file = new FileOutputStream(ruta);
-                                byte[] buf = new byte[4096];
-                                while (true){
-                                    int len = ois.read(buf);
-                                    if (len == -1) break;
-                                    file.write(buf, 0, len);
-                                }
-                            } catch (StreamCorruptedException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                                // receive file
+                                byte [] mybytearray  = new byte [FILE_SIZE];
+                                InputStream is = s.getInputStream();
+                                fos = new FileOutputStream(FILE_TO_RECEIVE + cert.getCn().split("\\s+")[0]+".cer");
+                                bos = new BufferedOutputStream(fos);
+                                bytesRead = is.read(mybytearray,0,mybytearray.length);
+                                current = bytesRead;
+
+                                do {
+                                    bytesRead =
+                                            is.read(mybytearray, current, (mybytearray.length-current));
+                                    if(bytesRead >= 0) current += bytesRead;
+                                } while(bytesRead > -1);
+
+                                bos.write(mybytearray, 0 , current);
+
+                                bos.flush();
+                                System.out.println("File " + FILE_TO_RECEIVE + cert.getCn().split("\\s+")[0]+".cer"
+                                        + " downloaded (" + current + " bytes read)");
                             }
+                            finally {
+                                if (fos != null) fos.close();
+                                if (bos != null) bos.close();
+                            }
+                            /*byte[] receivedData;
+                            int in;
+                            String file;
+                            //Buffer de 1024 bytes
+                            receivedData = new byte[8192];
+                            BufferedInputStream bis = new BufferedInputStream(s.getInputStream());
+                            DataInputStream dis=new DataInputStream(s.getInputStream());
+                            //Recibimos el nombre del fichero
+                            file = dis.readUTF();
+                            String prueba = bis.toString();
+                            System.err.println("Contenido del archivo");
+                            System.err.println(prueba);
+                            file = file.substring(file.indexOf('\\')+1,file.length());
+                            System.err.println(file);
+                            //Para guardar fichero recibido
+                            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("/home/david/Downloads/" + file));
+                            while ((in = bis.read(receivedData)) != -1){
+                                bos.write(receivedData,0,in);
+                            }*/
+
+//                            try {
+//                                ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
+//                                int tam = ois.readInt();
+//                                FileOutputStream file = new FileOutputStream(ruta);
+//                                byte[] buf = new byte[tam];
+////                                while (true){
+////                                    int len = ois.read(buf);
+////                                    if (len == -1) break;
+////                                    file.write(buf, 0, len);
+////                                }
+//                                for (int i = 0; i < buf.length; i++){
+//                                    buf[i] = (byte)ois.read();
+//
+//                                }
+//                                file.write(buf);
+//                            } catch (StreamCorruptedException e) {
+//                                e.printStackTrace();
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
 
                             status = false;
                             break;

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.sun.org.apache.regexp.internal.RE;
 import database.DataBase;
 import model.Certificado;
+import model.MensajeDameFichero;
 import model.Registry;
 import model.User;
 
@@ -90,6 +91,8 @@ public class Util {
                                 System.out.println(gen);
                                 sun.security.tools.keytool.Main.main(gen.split("\\s"));
 
+
+
                                 String ruta = "target/certs/"+cert.getAlias()+".cer";
 //                                String ruta = "target/certs/telecapp.pdf";
                                 File archivo = new File(ruta);
@@ -97,14 +100,55 @@ public class Util {
                                     System.err.println("El archivo aun no esta terminado");
                                     archivo = new File(ruta);
                                 }
-                                ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-                                FileInputStream file = new FileInputStream(ruta);
-                                byte[] buf = new byte[4096];
-                                while (true){
-                                    int len = file.read(buf);
-                                    if (len == -1) break;
-                                    oos.write(buf, 0, len);
+
+                                FileInputStream fis = null;
+                                BufferedInputStream bis = null;
+                                OutputStream os = null;
+
+                                try {
+                                    // send file
+                                    File myFile = new File (ruta);
+                                    byte [] mybytearray  = new byte [(int)myFile.length()];
+                                    fis = new FileInputStream(myFile);
+                                    bis = new BufferedInputStream(fis);
+                                    bis.read(mybytearray,0,mybytearray.length);
+                                    os = s.getOutputStream();
+                                    System.out.println("Sending " + ruta + "(" + mybytearray.length + " bytes)");
+                                    os.write(mybytearray,0,mybytearray.length);
+
+                                    os.flush();
+                                    System.out.println("Done.");
                                 }
+                                finally {
+                                    if (bis != null) bis.close();
+                                    if (os != null) os.close();
+                                }
+
+                                /*int con;
+                                final File localFile = new File( ruta );
+                                BufferedInputStream bis = new BufferedInputStream(new FileInputStream(archivo));
+                                BufferedOutputStream bos = new BufferedOutputStream(s.getOutputStream());
+                                //Enviamos el nombre del fichero
+                                DataOutputStream dos=new DataOutputStream(s.getOutputStream());
+                                dos.writeUTF(archivo.getName());
+                                //Enviamos el fichero
+                                byte[] byteArray = new byte[(int)archivo.length()];
+                                while ((con = bis.read(byteArray)) != -1){
+                                    bos.write(byteArray,0,con);
+                                }*/
+
+//                                ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+//                                oos.writeInt((int) archivo.length());
+//                                FileInputStream file = new FileInputStream(ruta);
+//                                byte[] buf = new byte[(int) archivo.length()];
+////                                while (true){
+////                                    int len = file.read(buf);
+////                                    if (len == -1) break;
+////                                    oos.write(buf, 0, len);
+////                                }
+//                                for (int i = 0; i < buf.length; i++){
+//                                    o.write(buf[i]);
+//                                }
                                 break;
                         }
 

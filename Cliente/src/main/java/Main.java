@@ -42,7 +42,7 @@ public class Main {
                             System.out.print("Nombre de usuario: ");
                             user.setUserName(teclado.nextLine().toLowerCase());
                             System.out.print("Clave: ");
-                            user.setPassword(s.encriptar(teclado.nextLine().toLowerCase()));
+                            user.setPassword(s.encriptar(teclado.nextLine()));
                             s.start(user, "ingresar");
                         } else {
                             System.out.print("Usted ha agotado el numero de intentos");
@@ -52,11 +52,12 @@ public class Main {
                         System.out.print("Nombre de usuario: ");
                         user.setUserName(teclado.nextLine().toLowerCase());
                         System.out.print("Clave: ");
-                        String pass = teclado.nextLine().toLowerCase();
-                        while (pass.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*(_|[^\\w])).{6,}$")){
+                        String pass = teclado.nextLine();
+                        pass = pass.toString().replaceAll("[\n\r]","");
+                        while (!pass.trim().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*(_|[-+_!@#$%^&*.,?])).+$") || pass.length() < 6){
                             System.out.println("Minimo de 6, un caracter especial y una mayuscula");
                             System.out.print("Clave: ");
-                            pass = teclado.nextLine().toLowerCase();
+                            pass = teclado.nextLine();
                         }
                         user.setPassword(s.encriptar(pass));
                         s.start(user, "registrar");
