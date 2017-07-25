@@ -18,7 +18,7 @@ public class SocketSSL {
     /**
      * Contructor vacio que inicializa el socketssl en el puerto del registry con el almacen de claves serverKey.jks
      * y su respectiva clave.
-     * @throws IOException
+     * @throws IOException InputOutputException
      * @see Registry
      */
     public SocketSSL() throws IOException {
@@ -29,6 +29,9 @@ public class SocketSSL {
         ss = ssf.createServerSocket(Registry.port);
     }
 
+    /**
+     * Inicializa los servicios del servidor
+     */
     public void start(){
         Util.startServer(ss);
     }

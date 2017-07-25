@@ -170,7 +170,7 @@ public class Util {
 
     /**
      * Imprime un conjunto de caracteres divididos por una expresion regular.
-     * @param s
+     * @param s String a dividir por espacios
      */
     public static void imprimir(String s){
 

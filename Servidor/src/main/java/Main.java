@@ -30,13 +30,13 @@ public class Main {
     /**
      * Inicializa y limpia la base de datos.
      * Instancia e inicia la escucha del socket.
-     * @param args
-     * @throws CertificateException
-     * @throws UnrecoverableKeyException
-     * @throws NoSuchAlgorithmException
-     * @throws IOException
-     * @throws KeyManagementException
-     * @throws KeyStoreException
+     * @param args argumentos vacios
+     * @throws CertificateException CertificateException
+     * @throws UnrecoverableKeyException UnrecoverableKeyException
+     * @throws NoSuchAlgorithmException NoSuchAlgorithmException
+     * @throws IOException IOException
+     * @throws KeyManagementException KeyManagementException
+     * @throws KeyStoreException KeyStoreException
      * @see DataBase
      * @see SocketSSL
      */
