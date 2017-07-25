@@ -84,12 +84,27 @@ public class Util {
                                 gen = "-export " +
                                         "-keystore "+Util.class.getClassLoader().getResource("serverKey.jks").getPath()+" " +
                                         "-alias "+cert.getAlias()+" " +
-                                        "-file "+cert.getAlias()+".cer " +
+                                        "-file target/certs/"+cert.getAlias()+".cer " +
                                         "-keypass "+Registry.passwordCerts+" " +
                                         "-storepass " + Registry.passwordCerts;
-//                                System.out.println(this.getClass().getResource("").getPath());
                                 System.out.println(gen);
                                 sun.security.tools.keytool.Main.main(gen.split("\\s"));
+
+                                String ruta = "target/certs/"+cert.getAlias()+".cer";
+//                                String ruta = "target/certs/telecapp.pdf";
+                                File archivo = new File(ruta);
+                                while (!archivo.exists()){
+                                    System.err.println("El archivo aun no esta terminado");
+                                    archivo = new File(ruta);
+                                }
+                                ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+                                FileInputStream file = new FileInputStream(ruta);
+                                byte[] buf = new byte[4096];
+                                while (true){
+                                    int len = file.read(buf);
+                                    if (len == -1) break;
+                                    oos.write(buf, 0, len);
+                                }
                                 break;
                         }
 

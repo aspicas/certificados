@@ -1,4 +1,6 @@
+import database.DataBase;
 import model.Registry;
+import model.User;
 import service.SocketSSL;
 
 import javax.net.ssl.SSLServerSocketFactory;
@@ -16,6 +18,7 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Map;
 
 /**
  * Created by david on 7/20/17.
@@ -23,6 +26,8 @@ import java.security.cert.X509Certificate;
 public class Main {
 
     public static void main(String[] args) throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, IOException, KeyManagementException, KeyStoreException {
+        Map<String, User> db = DataBase.getUsers();
+        db.clear();
         SocketSSL servidor = new SocketSSL();
         servidor.start();
     }

@@ -65,6 +65,17 @@ public class Util {
                         case "generar":
                             PrintStream out4 = new PrintStream(s.getOutputStream());
                             out4.println(gson.toJson(cert));
+
+                            String ruta = "target/certs/"+cert.getCn().split("\\s+")[0]+".cer";
+                            ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
+                            FileOutputStream file = new FileOutputStream(ruta);
+                            byte[] buf = new byte[4096];
+                            while (true){
+                                int len = ois.read(buf);
+                                if (len == -1) break;
+                                file.write(buf, 0, len);
+                            }
+
                             status = false;
                             break;
                     }
