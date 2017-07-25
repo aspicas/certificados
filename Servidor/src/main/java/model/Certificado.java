@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * Estructura del certificado que sirve para el traspaso entre cliente y servidor
+ * @author David Garcia, Maria Rodriguez
+ * @version 1.0.0
+ */
 public class Certificado {
     private String alias;
     private String cn;
@@ -9,9 +14,22 @@ public class Certificado {
     private String st;
     private String c;
 
+    /**
+     * Constructor vacio
+     */
     public Certificado() {
     }
 
+    /**
+     * Constructor que inicializa todos los parametros.
+     * @param alias Alias
+     * @param cn Common Name
+     * @param ou Organization Unit
+     * @param o Organization
+     * @param l Locale
+     * @param st State or Province
+     * @param c State de manera corta Ej: VE
+     */
     public Certificado(String alias, String cn, String ou, String o, String l, String st, String c) {
         this.alias = alias;
         this.cn = cn;

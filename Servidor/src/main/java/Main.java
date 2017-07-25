@@ -21,10 +21,25 @@ import java.security.cert.X509Certificate;
 import java.util.Map;
 
 /**
- * Created by david on 7/20/17.
+ * Clase principal que corre el sistema.
+ * @author David Garcia, Maria Rodriguez
+ * @version 1.0.0
  */
 public class Main {
 
+    /**
+     * Inicializa y limpia la base de datos.
+     * Instancia e inicia la escucha del socket.
+     * @param args
+     * @throws CertificateException
+     * @throws UnrecoverableKeyException
+     * @throws NoSuchAlgorithmException
+     * @throws IOException
+     * @throws KeyManagementException
+     * @throws KeyStoreException
+     * @see DataBase
+     * @see SocketSSL
+     */
     public static void main(String[] args) throws CertificateException, UnrecoverableKeyException, NoSuchAlgorithmException, IOException, KeyManagementException, KeyStoreException {
         Map<String, User> db = DataBase.getUsers();
         db.clear();

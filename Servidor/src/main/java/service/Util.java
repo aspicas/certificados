@@ -1,27 +1,28 @@
 package service;
 
 import com.google.gson.Gson;
-import com.sun.org.apache.regexp.internal.RE;
 import database.DataBase;
 import model.Certificado;
-import model.MensajeDameFichero;
 import model.Registry;
 import model.User;
 
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocket;
 import java.io.*;
-import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.security.cert.Certificate;
-import java.security.cert.X509Certificate;
 import java.util.Map;
 
 /**
- * Created by david on 7/21/17.
+ * Crea un hilo y permite manejar las peticiones del cliente.
+ * @author David Garcia, Maria Rodriguez
+ * @version 1.0.0
  */
 public class Util {
+    /**
+     * Inicializa la actividad de escucha del servidor.
+     * Maneja el ingreso y el registro al sistema y la generacion del certificado del cliente.
+     * @param ss ServerSocket que sirve de escucha.
+     * @see ServerSocket
+     */
     public static void startServer(final ServerSocket ss){
         System.out.println("Server start");
         new Thread(){
@@ -167,6 +168,10 @@ public class Util {
         }.start();
     }
 
+    /**
+     * Imprime un conjunto de caracteres divididos por una expresion regular.
+     * @param s
+     */
     public static void imprimir(String s){
 
         for (int i = 0; i<s.split("\\s").length; i++){
