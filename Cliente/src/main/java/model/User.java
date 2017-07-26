@@ -1,16 +1,26 @@
 package model;
 
 /**
- * Created by david on 7/21/17.
+ * Estructura de los datos que se guardaran y se transmitiran entre el cliente y el servidor del usuario.
+ * @author David Garcia, Maria Rodriguez
+ * @version 1.0.0
  */
 public class User {
 
     private String userName;
     private String password;
 
+    /**
+     * Constructor vacio
+     */
     public User() {
     }
 
+    /**
+     * Constructor que inicializa todos los parametros
+     * @param userName Nombre del usuario
+     * @param password Clave del usuario
+     */
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;

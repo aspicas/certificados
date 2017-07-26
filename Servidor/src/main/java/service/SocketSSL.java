@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 
 /**
- * Se encarga de inicializar el socketssl con el almacen de claves y su clave.
+ * Se encarga de inicializar el socketssl con el almacen de claves y su clave con su puerto de escucha.
  * @author David Garcia, Maria Rodriguez
  * @version 1.0.0
  */

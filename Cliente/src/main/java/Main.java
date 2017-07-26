@@ -22,9 +22,17 @@ import java.security.cert.X509Certificate;
 import java.util.Scanner;
 
 /**
- * Created by david on 7/21/17.
+ * Clase principal que corre el cliente.
+ * @author David Garcia, Maria Rodriguez
+ * @version 1.0.0
  */
 public class Main {
+    /**
+     * Ingresa valores de entrada de un menu para poder enviar las peticiones al servidor
+     * Instancia e inicia las peticiones del socket.
+     * @param args argumentos vacios
+     * @throws Exception Exception
+     */
     public static void main(String[] args) throws Exception {
         User user = new User();
         Scanner teclado = new Scanner(System.in);

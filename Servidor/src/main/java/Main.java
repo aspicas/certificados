@@ -21,7 +21,7 @@ import java.security.cert.X509Certificate;
 import java.util.Map;
 
 /**
- * Clase principal que corre el sistema.
+ * Clase principal que corre el servidor.
  * @author David Garcia, Maria Rodriguez
  * @version 1.0.0
  */

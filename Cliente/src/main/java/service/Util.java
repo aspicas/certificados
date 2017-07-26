@@ -2,19 +2,17 @@ package service;
 
 import com.google.gson.Gson;
 import model.Certificado;
-import model.MensajeDameFichero;
 import model.User;
 
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
 import java.io.*;
-import java.math.BigInteger;
 import java.net.Socket;
-import java.security.cert.Certificate;
-import java.security.cert.X509Certificate;
 
 /**
- * Created by david on 7/21/17.
+ * Crea un hilo y permite hacer las peticiones al servidor.
+ * @author David Garcia, Maria Rodriguez
+ * @version 1.0.0
  */
 public class Util {
     public static int intentos = 0;
@@ -25,6 +23,15 @@ public class Util {
     public final static String
             FILE_TO_RECEIVE = "target/certs/";
 
+    /**
+     * Inicializa la actividad de escucha del cliente.
+     * Genera los datos a enviar del ingreso y el registro al sistema y la generacion del certificado del cliente.
+     * @param s Socket
+     * @param user User
+     * @param comando ingresar - registrar - prueba - generar
+     * @see User
+     * @see Socket
+     */
     public static void startClient(final Socket s, final User user, final String comando){
         System.out.println("Client start");
         new Thread(){
